@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBPIO Studio — Design, Web & Branding · Strasbourg</title>
+<meta name="description" content="OBPIO est un studio de design, développement web et branding basé à Strasbourg. Identités visuelles, sites web, applications et supports imprimés.">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ══ HERO ══════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-left {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 80px 52px 80px 52px;
+  position: relative; z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 14px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 32px; height: 1px; background: var(--purple);
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 6.5vw, 92px);
+  font-weight: 300; line-height: 0.92;
+  letter-spacing: -0.01em; color: var(--black);
+  margin-bottom: 32px;
+}
+.hero-title em { font-style: italic; color: var(--purple); }
+
+.hero-sub {
+  font-size: 15px; color: var(--muted);
+  line-height: 1.8; max-width: 420px;
+  margin-bottom: 44px;
+}
+
+.hero-btns { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+.hero-stats {
+  display: flex; gap: 40px;
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px; font-weight: 600;
+  color: var(--purple); line-height: 1;
+  margin-bottom: 4px;
+}
+.hero-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Hero right — animated canvas */
+.hero-right {
+  background: var(--lpurple);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-canvas {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-word {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(100px, 16vw, 220px);
+  font-weight: 600; font-style: italic;
+  color: var(--purple); opacity: 0.07;
+  user-select: none; white-space: nowrap;
+  animation: heroFloat 8s ease-in-out infinite;
+  letter-spacing: -0.02em;
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-20px) rotate(-2deg); }
+}
+
+.hero-services-list {
+  position: absolute; bottom: 48px; left: 48px; right: 48px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.hero-service-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 7px 14px;
+  border: 1px solid rgba(83,74,183,0.2);
+  border-radius: 100px;
+  color: var(--purple);
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  animation: pillIn .6s ease both;
+}
+.hero-service-pill:nth-child(1) { animation-delay: .2s; }
+.hero-service-pill:nth-child(2) { animation-delay: .35s; }
+.hero-service-pill:nth-child(3) { animation-delay: .5s; }
+.hero-service-pill:nth-child(4) { animation-delay: .65s; }
+.hero-service-pill:nth-child(5) { animation-delay: .8s; }
+.hero-service-pill:nth-child(6) { animation-delay: .95s; }
+@keyframes pillIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute; bottom: 40px; left: 52px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0; animation: fadeIn 1s 1.5s ease both;
+}
+.scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--purple), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  writing-mode: vertical-rl;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ══ SERVICES ══════════════════════════════ */
+.services { padding: 120px 0; }
+.services-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: end;
+  margin-bottom: 72px;
+}
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+}
+.service-card {
+  background: var(--white);
+  padding: 44px 36px;
+  display: flex; flex-direction: column;
+  transition: background .3s;
+  cursor: default;
+}
+.service-card:hover { background: var(--lpurple); }
+.service-card:hover .service-arrow { opacity: 1; transform: translate(4px, -4px); }
+
+.service-icon {
+  width: 48px; height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 28px;
+  font-size: 20px;
+  transition: border-color .3s, background .3s;
+}
+.service-card:hover .service-icon { border-color: var(--purple); background: var(--purple); color: white; }
+
+.service-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; color: var(--muted);
+  margin-bottom: 12px;
+}
+.service-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600;
+  color: var(--black); margin-bottom: 14px; line-height: 1.1;
+}
+.service-desc {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.7; flex: 1; margin-bottom: 24px;
+}
+.service-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.service-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 8px; background: var(--bg2);
+  border-radius: 2px; color: var(--muted);
+}
+.service-arrow {
+  align-self: flex-end;
+  opacity: 0; transition: all .25s;
+  font-size: 18px; color: var(--purple);
+}
+
+/* ══ ABOUT TEASER ══════════════════════════ */
+.about-teaser {
+  background: var(--black); color: var(--white);
+  padding: 120px 0;
+  position: relative; overflow: hidden;
+}
+.about-teaser-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(83,74,183,0.15), transparent);
+  pointer-events: none;
+}
+.about-teaser-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.about-teaser-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5vw, 68px);
+  font-weight: 300; line-height: 0.95;
+  color: var(--white);
+}
+.about-teaser-title em { font-style: italic; color: var(--purple); }
+.about-teaser-body {
+  font-size: 15px; color: rgba(255,255,255,0.5);
+  line-height: 1.8; margin-bottom: 32px;
+}
+.about-teaser-highlight {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 400; font-style: italic;
+  color: rgba(255,255,255,0.7); line-height: 1.5;
+  border-left: 2px solid var(--purple);
+  padding-left: 20px; margin-bottom: 36px;
+}
+
+/* ══ PORTFOLIO PREVIEW ═════════════════════ */
+.portfolio-preview { padding: 120px 0; }
+.portfolio-preview-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 56px;
+}
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+}
+.portfolio-thumb {
+  aspect-ratio: 4/3;
+  position: relative; overflow: hidden;
+  cursor: pointer; background: var(--bg2);
+}
+.portfolio-thumb-bg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px; font-weight: 600;
+  transition: transform .5s ease;
+}
+.portfolio-thumb:hover .portfolio-thumb-bg { transform: scale(1.05); }
+.portfolio-thumb-overlay {
+  position: absolute; inset: 0;
+  background: rgba(26,26,24,0); padding: 24px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  transition: background .3s;
+}
+.portfolio-thumb:hover .portfolio-thumb-overlay { background: rgba(26,26,24,0.72); }
+.portfolio-thumb-info { transform: translateY(12px); opacity: 0; transition: all .3s; }
+.portfolio-thumb:hover .portfolio-thumb-info { transform: translateY(0); opacity: 1; }
+.portfolio-thumb-cat {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 4px;
+}
+.portfolio-thumb-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600; color: var(--white);
+}
+
+/* ══ SOCIAL PROOF ══════════════════════════ */
+.social-proof { padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.marquee-wrap { overflow: hidden; }
+.marquee-track {
+  display: flex; gap: 48px; align-items: center;
+  animation: marquee 24s linear infinite;
+  white-space: nowrap;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 300; font-style: italic;
+  color: var(--muted); flex-shrink: 0;
+}
+.marquee-dot { width: 4px; height: 4px; background: var(--purple); border-radius: 50%; flex-shrink: 0; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ══ CTA ═══════════════════════════════════ */
+.cta-section {
+  padding: 140px 0; text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-bg-text {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(80px, 14vw, 180px);
+  font-weight: 600; font-style: italic;
+  color: var(--purple); opacity: 0.04;
+  user-select: none; pointer-events: none;
+}
+.cta-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5.5vw, 72px);
+  font-weight: 300; line-height: 1.05;
+  color: var(--black); margin-bottom: 24px;
+  position: relative;
+}
+.cta-title em { font-style: italic; color: var(--purple); }
+.cta-sub {
+  font-size: 15px; color: var(--muted);
+  line-height: 1.8; max-width: 480px;
+  margin: 0 auto 44px;
+}
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ══ RESPONSIVE ════════════════════════════ */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { min-height: 360px; }
+  .hero-left { padding: 60px 24px; }
+  .services-header, .about-teaser-inner { grid-template-columns: 1fr; gap: 32px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .portfolio-grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-preview-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+}
+@media (max-width: 600px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: column; gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">OBPIO</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Accueil</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">À propos</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Démarrer un projet</a>
+  <button class="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow reveal">Studio · Strasbourg · France</div>
+    <h1 class="hero-title reveal reveal-delay-1">
+      On crée ce que<br>vous <em>imaginez.</em>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      Design, développement web et branding pour les entreprises qui veulent laisser une trace. Du logo au site, de l'app à l'emballage — on s'occupe de tout.
+    </p>
+    <div class="hero-btns reveal reveal-delay-3">
+      <a href="portfolio.html" class="btn-primary">
+        Voir le portfolio
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="contact.html" class="btn-outline">Nous contacter</a>
+    </div>
+    <div class="hero-stats reveal reveal-delay-4">
+      <div>
+        <div class="hero-stat-num">4+</div>
+        <div class="hero-stat-label">Années d'expérience</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">30+</div>
+        <div class="hero-stat-label">Projets réalisés</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">Pays clients</div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-canvas">
+      <div class="hero-word">Studio</div>
+    </div>
+    <div class="hero-services-list">
+      <span class="hero-service-pill">UI / UX Design</span>
+      <span class="hero-service-pill">Développement Web</span>
+      <span class="hero-service-pill">Branding</span>
+      <span class="hero-service-pill">Applications</span>
+      <span class="hero-service-pill">Impression</span>
+      <span class="hero-service-pill">E-commerce</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="social-proof">
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Design</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Développement Web</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Identité Visuelle</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Applications Mobile</span><span class="marquee-dot"></span>
+      <span class="marquee-item">E-commerce</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Impression & Supports</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Packaging</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Strasbourg · France</span><span class="marquee-dot"></span>
+      <!-- duplicate for loop -->
+      <span class="marquee-item">Design</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Développement Web</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Identité Visuelle</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Applications Mobile</span><span class="marquee-dot"></span>
+      <span class="marquee-item">E-commerce</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Impression & Supports</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Packaging</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Strasbourg · France</span><span class="marquee-dot"></span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <div class="section-label reveal">Nos expertises</div>
+        <h2 class="display-title reveal reveal-delay-1">Ce qu'on<br><em>sait faire.</em></h2>
+      </div>
+      <p class="reveal reveal-delay-2" style="color:var(--muted);font-size:15px;line-height:1.8;max-width:400px;">
+        Un studio complet, du concept à la livraison. Pas de sous-traitance cachée, pas de surprises. On maîtrise chaque étape de votre projet.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">◈</div>
+        <div class="service-num">01</div>
+        <div class="service-title">UI / UX Design</div>
+        <div class="service-desc">Interfaces intuitives et expériences utilisateur mémorables. Du wireframe au design final, on conçoit des produits que les gens aiment utiliser.</div>
+        <div class="service-tags">
+          <span class="service-tag">Figma</span>
+          <span class="service-tag">Prototypage</span>
+          <span class="service-tag">Mobile</span>
+          <span class="service-tag">Web App</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">⬡</div>
+        <div class="service-num">02</div>
+        <div class="service-title">Développement Web</div>
+        <div class="service-desc">Sites vitrines, e-commerce, landing pages et applications web. Code propre, performances optimisées, responsive sur tous les écrans.</div>
+        <div class="service-tags">
+          <span class="service-tag">React</span>
+          <span class="service-tag">Framer</span>
+          <span class="service-tag">Shopify</span>
+          <span class="service-tag">WordPress</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">◉</div>
+        <div class="service-num">03</div>
+        <div class="service-title">Branding & Identité</div>
+        <div class="service-desc">Logos, chartes graphiques, systèmes visuels complets. Une identité qui vous ressemble et qui reste gravée dans la mémoire de vos clients.</div>
+        <div class="service-tags">
+          <span class="service-tag">Logo</span>
+          <span class="service-tag">Charte graphique</span>
+          <span class="service-tag">Typographie</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">▣</div>
+        <div class="service-num">04</div>
+        <div class="service-title">Impression & Supports</div>
+        <div class="service-desc">Cartes de visite, kakémonos, papier entête, brochures, affiches. Conception et impression gérées de bout en bout.</div>
+        <div class="service-tags">
+          <span class="service-tag">Cartvizit</span>
+          <span class="service-tag">Flyers</span>
+          <span class="service-tag">Signalétique</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">⬟</div>
+        <div class="service-num">05</div>
+        <div class="service-title">Packaging Design</div>
+        <div class="service-desc">Emballages produits, étiquettes, boîtes, sachets. Un packaging qui vend avant même que le client ait ouvert la boîte.</div>
+        <div class="service-tags">
+          <span class="service-tag">Étiquettes</span>
+          <span class="service-tag">Boîtes</span>
+          <span class="service-tag">Gamme produit</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">◈</div>
+        <div class="service-num">06</div>
+        <div class="service-title">E-commerce & Import</div>
+        <div class="service-desc">Boutiques en ligne, sourcing de produits depuis la Turquie, mise en vente sur Amazon, Etsy ou Shopify. Pont entre producteurs et marché européen.</div>
+        <div class="service-tags">
+          <span class="service-tag">Amazon</span>
+          <span class="service-tag">Etsy</span>
+          <span class="service-tag">Sourcing TR</span>
+        </div>
+        <div class="service-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT TEASER -->
+<section class="about-teaser">
+  <div class="about-teaser-bg"></div>
+  <div class="container">
+    <div class="about-teaser-inner">
+      <div>
+        <div class="section-label reveal" style="color:rgba(83,74,183,0.7)">À propos</div>
+        <h2 class="about-teaser-title reveal reveal-delay-1">
+          Un studio.<br>Plusieurs <em>expertises.</em>
+        </h2>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="about-teaser-highlight">
+          "On ne fait pas que livrer un fichier. On construit quelque chose qui dure."
+        </div>
+        <p class="about-teaser-body">
+          OBPIO c'est Cansın Özkan, designer et développeur basé à Strasbourg. Fort d'une expérience en design graphique, UI/UX et développement front-end, le studio accompagne les entreprises locales et internationales dans leur transformation visuelle et digitale.
+        </p>
+        <p class="about-teaser-body" style="margin-bottom:36px;">
+          Pont naturel entre la France et la Turquie, OBPIO offre aussi un accès unique à un réseau de producteurs et fabricants turcs pour les entreprises européennes.
+        </p>
+        <a href="about.html" class="btn-outline" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">
+          En savoir plus
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO PREVIEW -->
+<section class="portfolio-preview">
+  <div class="container">
+    <div class="portfolio-preview-header">
+      <div>
+        <div class="section-label reveal">Sélection de projets</div>
+        <h2 class="display-title reveal reveal-delay-1">Nos derniers<br><em>travaux.</em></h2>
+      </div>
+      <a href="portfolio.html" class="btn-outline reveal reveal-delay-2">Voir tout le portfolio →</a>
+    </div>
+    <div class="portfolio-grid reveal">
+      <!-- 1 -->
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:var(--lpurple);">
+          <span style="color:var(--purple);opacity:0.15;font-size:100px">◈</span>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--purple);letter-spacing:0.1em">FlexCore</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)">App Design</div>
+        </div>
+        <div class="portfolio-thumb-overlay">
+          <div class="portfolio-thumb-info">
+            <div class="portfolio-thumb-cat">Application Mobile · Fitness</div>
+            <div class="portfolio-thumb-name">FlexCore Gym App</div>
+          </div>
+        </div>
+      </div>
+      <!-- 2 -->
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:var(--lcoral);">
+          <span style="color:var(--coral);opacity:0.15;font-size:100px">⬡</span>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--coral);letter-spacing:0.1em">Atelier</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)">Site Web</div>
+        </div>
+        <div class="portfolio-thumb-overlay">
+          <div class="portfolio-thumb-info">
+            <div class="portfolio-thumb-cat">Site Vitrine · Artisanat</div>
+            <div class="portfolio-thumb-name">Atelier Lumière</div>
+          </div>
+        </div>
+      </div>
+      <!-- 3 -->
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-bg" style="background:var(--lcyan);">
+          <span style="color:var(--cyan);opacity:0.15;font-size:100px">◉</span>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--cyan);letter-spacing:0.1em">Barkley</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)">Packaging</div>
+        </div>
+        <div class="portfolio-thumb-overlay">
+          <div class="portfolio-thumb-info">
+            <div class="portfolio-thumb-cat">Packaging · Alimentation animale</div>
+            <div class="portfolio-thumb-name">Barkley Dog Treats</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" style="background:var(--bg2);">
+  <div class="cta-bg-text">Ensemble</div>
+  <div class="container" style="position:relative;">
+    <div class="section-label reveal" style="justify-content:center;margin-bottom:24px;">Prêt à commencer ?</div>
+    <h2 class="cta-title reveal reveal-delay-1">
+      Votre projet mérite<br>d'être <em>remarqué.</em>
+    </h2>
+    <p class="cta-sub reveal reveal-delay-2">
+      Un projet en tête ? Une question ? On répond en moins de 24h. Premier échange toujours gratuit.
+    </p>
+    <div class="cta-btns reveal reveal-delay-3">
+      <a href="contact.html" class="btn-primary">Démarrer un projet</a>
+      <a href="portfolio.html" class="btn-outline">Voir le portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">OBPIO</div>
+        <p class="footer-brand-desc">
+          Studio de design, développement web et branding. Basé à Strasbourg, nous travaillons avec des clients en France, en Europe et au-delà.
+        </p>
+        <div class="footer-socials">
+          <!-- Instagram -->
+          <a href="#" class="footer-social" aria-label="Instagram" title="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="#" class="footer-social" aria-label="LinkedIn" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <!-- GitHub -->
+          <a href="#" class="footer-social" aria-label="GitHub" title="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <!-- Behance -->
+          <a href="#" class="footer-social" aria-label="Behance" title="Behance">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M7.803 5.731c.589 0 1.119.051 1.605.155.483.103.895.273 1.243.508.343.235.611.547.804.939.195.391.293.873.293 1.444 0 .619-.141 1.137-.421 1.556-.28.42-.683.764-1.209 1.031.73.212 1.273.585 1.628 1.122.357.538.535 1.185.535 1.941 0 .624-.12 1.166-.358 1.625-.239.459-.566.837-.976 1.134-.41.297-.893.517-1.447.656-.551.138-1.132.207-1.737.207H1V5.731h6.803zm-.351 4.972c.48 0 .878-.114 1.192-.342.312-.228.469-.583.469-1.064 0-.27-.05-.494-.149-.669a1.136 1.136 0 0 0-.403-.42 1.771 1.771 0 0 0-.589-.225 3.44 3.44 0 0 0-.697-.068H3.421v2.788h4.031zm.174 5.239c.267 0 .521-.026.762-.079.241-.052.453-.14.637-.262.183-.123.329-.293.44-.511.11-.217.166-.492.166-.822 0-.654-.184-1.127-.551-1.422-.368-.294-.854-.44-1.456-.44H3.421v3.536h4.205zm9.337.166c.367.358.896.538 1.589.538.494 0 .921-.124 1.277-.374.357-.248.577-.515.656-.796h2.252c-.36 1.115-.913 1.912-1.659 2.392-.745.48-1.646.72-2.703.72-.733 0-1.396-.118-1.986-.354a4.337 4.337 0 0 1-1.522-1.002 4.533 4.533 0 0 1-.976-1.548 5.626 5.626 0 0 1-.347-2.003c0-.717.119-1.381.357-1.994a4.561 4.561 0 0 1 1.002-1.566 4.574 4.574 0 0 1 1.531-.999c.592-.238 1.244-.357 1.955-.357.797 0 1.497.152 2.1.459.601.307 1.099.72 1.49 1.24.39.522.675 1.112.851 1.773.177.66.241 1.353.19 2.081h-6.713c.034.746.243 1.282.656 1.789zm2.768-4.787c-.295-.322-.776-.485-1.439-.485-.414 0-.76.07-1.036.207a2.082 2.082 0 0 0-.656.516 1.9 1.9 0 0 0-.341.665 3.248 3.248 0 0 0-.109.674h4.21c-.105-.693-.334-1.255-.629-1.577zm-3.549-5.146h5.087V7.21h-5.087V6.175z"/></svg>
+          </a>
+          <!-- Dribbble -->
+          <a href="#" class="footer-social" aria-label="Dribbble" title="Dribbble">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-col-links">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-col-links">
+          <li><a href="#">UI / UX Design</a></li>
+          <li><a href="#">Développement Web</a></li>
+          <li><a href="#">Branding & Identité</a></li>
+          <li><a href="#">Impression</a></li>
+          <li><a href="#">Packaging</a></li>
+          <li><a href="#">E-commerce</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-col-links">
+          <li><a href="mailto:hello@obpio.fr">hello@obpio.fr</a></li>
+          <li><a href="tel:+33600000000">+33 6 00 00 00 00</a></li>
+          <li><a href="#">Strasbourg, France</a></li>
+          <li style="margin-top:12px;"><a href="contact.html" style="color:var(--purple);font-weight:500;">→ Démarrer un projet</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 OBPIO Studio · Tous droits réservés</div>
+      <div class="footer-made">Conçu & développé par <span>OBPIO</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

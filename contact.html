@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — OBPIO Studio</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.contact-layout {
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.contact-left {
+  background: var(--black);
+  padding: 80px 52px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.contact-left-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 20% 80%, rgba(83,74,183,0.2), transparent);
+  pointer-events: none;
+}
+.contact-left-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 300; line-height: 0.95;
+  color: var(--white); margin-bottom: 32px;
+  position: relative; z-index: 1;
+}
+.contact-left-title em { font-style: italic; color: var(--purple); }
+.contact-left-body {
+  font-size: 15px; color: rgba(255,255,255,0.4);
+  line-height: 1.8; max-width: 400px; margin-bottom: 48px;
+  position: relative; z-index: 1;
+}
+.contact-infos { display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
+.contact-info-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 20px; border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 2px; transition: border-color .2s;
+}
+.contact-info-item:hover { border-color: rgba(83,74,183,0.4); }
+.contact-info-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: rgba(83,74,183,0.15); border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--purple); font-size: 16px;
+}
+.contact-info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 4px;
+}
+.contact-info-value {
+  font-size: 14px; color: rgba(255,255,255,0.8);
+}
+.contact-socials {
+  display: flex; gap: 10px; margin-top: 40px;
+  position: relative; z-index: 1;
+}
+.contact-social {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.3); transition: all .2s; font-size: 16px;
+}
+.contact-social:hover { border-color: var(--purple); color: var(--white); background: var(--purple); }
+
+/* FORM */
+.contact-right {
+  padding: 80px 52px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.contact-form { display: flex; flex-direction: column; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.form-input, .form-textarea, .form-select {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 14px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; color: var(--black);
+  width: 100%;
+  transition: border-color .2s, box-shadow .2s;
+  appearance: none;
+  outline: none;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(83,74,183,0.08);
+}
+.form-textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7972' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer; }
+.form-budget {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+.budget-option { display: none; }
+.budget-label {
+  display: block; padding: 10px 14px; text-align: center;
+  border: 1px solid var(--border); border-radius: 2px;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer; transition: all .2s;
+}
+.budget-option:checked + .budget-label {
+  border-color: var(--purple); background: var(--lpurple); color: var(--purple);
+}
+.form-submit {
+  width: 100%; padding: 16px;
+  background: var(--purple); color: var(--white);
+  border: none; border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: all .2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.form-submit:hover { background: var(--dpurple); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(83,74,183,0.3); }
+.form-note {
+  font-size: 11px; color: var(--muted); text-align: center; line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .contact-layout { grid-template-columns: 1fr; }
+  .contact-left { padding: 60px 24px; }
+  .contact-right { padding: 60px 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  .form-budget { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">OBPIO</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">À propos</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Démarrer un projet</a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="contact-layout">
+  <!-- LEFT -->
+  <div class="contact-left">
+    <div class="contact-left-bg"></div>
+    <div class="section-label reveal" style="color:rgba(83,74,183,0.7);">Contact</div>
+    <h1 class="contact-left-title reveal reveal-delay-1">
+      Parlons de<br>votre <em>projet.</em>
+    </h1>
+    <p class="contact-left-body reveal reveal-delay-2">
+      Que vous ayez un projet précis ou juste une idée floue, on est là pour vous aider à y voir plus clair. Premier échange toujours gratuit, réponse sous 24h.
+    </p>
+    <div class="contact-infos reveal reveal-delay-3">
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-info-label">Email</div>
+          <div class="contact-info-value">hello@obpio.fr</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-info-label">Localisation</div>
+          <div class="contact-info-value">Strasbourg, Alsace — France</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="contact-info-label">Disponibilité</div>
+          <div class="contact-info-value">Réponse sous 24h · Lun–Ven</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-socials reveal reveal-delay-4">
+      <a href="#" class="contact-social" aria-label="Instagram" title="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="#" class="contact-social" aria-label="LinkedIn" title="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="#" class="contact-social" aria-label="GitHub" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </a>
+      <a href="#" class="contact-social" aria-label="Behance" title="Behance">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M7.803 5.731c.589 0 1.119.051 1.605.155.483.103.895.273 1.243.508.343.235.611.547.804.939.195.391.293.873.293 1.444 0 .619-.141 1.137-.421 1.556-.28.42-.683.764-1.209 1.031.73.212 1.273.585 1.628 1.122.357.538.535 1.185.535 1.941 0 .624-.12 1.166-.358 1.625-.239.459-.566.837-.976 1.134-.41.297-.893.517-1.447.656-.551.138-1.132.207-1.737.207H1V5.731h6.803zm-.351 4.972c.48 0 .878-.114 1.192-.342.312-.228.469-.583.469-1.064 0-.27-.05-.494-.149-.669a1.136 1.136 0 0 0-.403-.42 1.771 1.771 0 0 0-.589-.225 3.44 3.44 0 0 0-.697-.068H3.421v2.788h4.031zm.174 5.239c.267 0 .521-.026.762-.079.241-.052.453-.14.637-.262.183-.123.329-.293.44-.511.11-.217.166-.492.166-.822 0-.654-.184-1.127-.551-1.422-.368-.294-.854-.44-1.456-.44H3.421v3.536h4.205zm9.337.166c.367.358.896.538 1.589.538.494 0 .921-.124 1.277-.374.357-.248.577-.515.656-.796h2.252c-.36 1.115-.913 1.912-1.659 2.392-.745.48-1.646.72-2.703.72-.733 0-1.396-.118-1.986-.354a4.337 4.337 0 0 1-1.522-1.002 4.533 4.533 0 0 1-.976-1.548 5.626 5.626 0 0 1-.347-2.003c0-.717.119-1.381.357-1.994a4.561 4.561 0 0 1 1.002-1.566 4.574 4.574 0 0 1 1.531-.999c.592-.238 1.244-.357 1.955-.357.797 0 1.497.152 2.1.459.601.307 1.099.72 1.49 1.24.39.522.675 1.112.851 1.773.177.66.241 1.353.19 2.081h-6.713c.034.746.243 1.282.656 1.789zm2.768-4.787c-.295-.322-.776-.485-1.439-.485-.414 0-.76.07-1.036.207a2.082 2.082 0 0 0-.656.516 1.9 1.9 0 0 0-.341.665 3.248 3.248 0 0 0-.109.674h4.21c-.105-.693-.334-1.255-.629-1.577zm-3.549-5.146h5.087V7.21h-5.087V6.175z"/></svg>
+      </a>
+      <a href="#" class="contact-social" aria-label="Dribbble" title="Dribbble">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGHT — FORM -->
+  <div class="contact-right">
+    <div class="section-label reveal" style="margin-bottom:24px;">Formulaire de contact</div>
+    <form class="contact-form reveal reveal-delay-1" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="nom">Nom complet *</label>
+          <input class="form-input" type="text" id="nom" placeholder="Jean Dupont" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email *</label>
+          <input class="form-input" type="email" id="email" placeholder="jean@entreprise.fr" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="entreprise">Entreprise</label>
+        <input class="form-input" type="text" id="entreprise" placeholder="Nom de votre entreprise">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="service">Type de projet *</label>
+        <select class="form-select" id="service" required>
+          <option value="" disabled selected>Choisir un service</option>
+          <option>UI / UX Design</option>
+          <option>Site vitrine</option>
+          <option>Application mobile</option>
+          <option>Branding & Logo</option>
+          <option>Impression & Supports</option>
+          <option>Packaging Design</option>
+          <option>E-commerce</option>
+          <option>Autre / Plusieurs services</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Budget estimé</label>
+        <div class="form-budget">
+          <div><input class="budget-option" type="radio" name="budget" id="b1" value="< 500€"><label class="budget-label" for="b1">< 500 €</label></div>
+          <div><input class="budget-option" type="radio" name="budget" id="b2" value="500-1500€"><label class="budget-label" for="b2">500 – 1 500 €</label></div>
+          <div><input class="budget-option" type="radio" name="budget" id="b3" value="1500-3000€"><label class="budget-label" for="b3">1 500 – 3 000 €</label></div>
+          <div><input class="budget-option" type="radio" name="budget" id="b4" value="3000-5000€"><label class="budget-label" for="b4">3 000 – 5 000 €</label></div>
+          <div><input class="budget-option" type="radio" name="budget" id="b5" value="> 5000€"><label class="budget-label" for="b5">> 5 000 €</label></div>
+          <div><input class="budget-option" type="radio" name="budget" id="b6" value="À définir"><label class="budget-label" for="b6">À définir</label></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">Décrivez votre projet *</label>
+        <textarea class="form-textarea" id="message" placeholder="Parlez-nous de votre projet, vos objectifs, votre délai idéal..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit">
+        Envoyer le message
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+      <p class="form-note">On vous répond sous 24h · Premier échange toujours gratuit</p>
+    </form>
+
+    <!-- Success message -->
+    <div id="success-msg" style="display:none;text-align:center;padding:48px 0;">
+      <div style="font-size:48px;margin-bottom:16px;">✓</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--black);margin-bottom:12px;">Message envoyé !</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;">On a bien reçu votre demande.<br>On vous répond dans moins de 24h.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);} }), {threshold:0.1});
+reveals.forEach(el => observer.observe(el));
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.querySelector('.contact-form').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+}
+</script>
+</body>
+</html>
