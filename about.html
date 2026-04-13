@@ -70,7 +70,7 @@
 }
 
 .values-section {
-  padding: 80px 0;
+  padding: 100px 0;
   background: var(--black);
 }
 .values-grid {
@@ -93,7 +93,7 @@
 }
 .value-body { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.75; }
 
-.stack-section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+.stack-section { padding: 100px 0; border-bottom: 1px solid var(--border); }
 .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-top: 52px; }
 .stack-item {
   background: var(--white); padding: 28px;
@@ -124,20 +124,8 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Démarrer un projet</a>
-  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <button class="hamburger"><span></span><span></span><span></span></button>
 </nav>
-
-<div class="mobile-menu" id="mobileMenu">
-  <ul>
-    <li><a href="index.html">Accueil</a></li>
-    <li><a href="portfolio.html">Portfolio</a></li>
-    <li><a href="about.html" class="active">À propos</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <div class="mobile-menu-cta">
-    <a href="contact.html">Démarrer un projet</a>
-  </div>
-</div>
 
 <section class="about-hero">
   <div class="container" style="display:contents;">
@@ -185,7 +173,7 @@
 </section>
 
 <!-- COMPÉTENCES -->
-<section style="padding:80px 0;border-bottom:1px solid var(--border);">
+<section style="padding:100px 0;border-bottom:1px solid var(--border);">
   <div class="container">
     <div class="section-label reveal">Expertise</div>
     <h2 class="display-title reveal reveal-delay-1">Ce que je<br><em>maîtrise.</em></h2>
@@ -272,7 +260,7 @@
 </section>
 
 <!-- CTA -->
-<section style="padding:80px 0;text-align:center;background:var(--bg2);">
+<section style="padding:120px 0;text-align:center;background:var(--bg2);">
   <div class="container">
     <div class="section-label reveal" style="justify-content:center;margin-bottom:24px;">Travaillons ensemble</div>
     <h2 class="display-title reveal reveal-delay-1" style="text-align:center;margin-bottom:24px;">Votre projet<br><em>nous attend.</em></h2>
@@ -312,22 +300,6 @@
 <script>
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
-
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  mobileMenu.classList.toggle('active');
-});
-
-// Close menu when clicking a link
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('active');
-  });
-});
-
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);} }), {threshold:0.1});
 reveals.forEach(el => observer.observe(el));
