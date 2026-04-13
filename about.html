@@ -15,7 +15,7 @@
   overflow: hidden;
 }
 .about-hero-left {
-  padding: 80px 52px 80px 0;
+  padding: 80px 52px;
   border-right: 1px solid var(--border);
   display: flex; flex-direction: column; justify-content: center;
 }
@@ -25,16 +25,23 @@
   gap: 32px;
 }
 .about-portrait {
-  width: 100%; aspect-ratio: 3/4;
+  width: 100%; aspect-ratio: 4/3;
   background: var(--lpurple);
   border-radius: 2px; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  position: relative; max-width: 360px;
+  position: relative; max-width: 450px;
 }
-.portrait-initials {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 120px; font-weight: 300; font-style: italic;
-  color: var(--purple); opacity: 0.3; user-select: none;
+.portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.portrait-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  opacity: 0.9;
 }
 .portrait-label {
   position: absolute; bottom: 20px; left: 20px;
@@ -144,7 +151,7 @@
     <div class="about-hero-right">
       <div class="reveal" style="padding-left:52px;">
         <div class="about-portrait">
-          <div class="portrait-initials">CÖ</div>
+          <img src="portrait.png" alt="Cansın Özkan" class="portrait-image">
           <div class="portrait-label">Cansın Özkan · Fondateur</div>
         </div>
       </div>
