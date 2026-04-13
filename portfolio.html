@@ -244,20 +244,8 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Démarrer un projet</a>
-  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <button class="hamburger"><span></span><span></span><span></span></button>
 </nav>
-
-<div class="mobile-menu" id="mobileMenu">
-  <ul>
-    <li><a href="index.html">Accueil</a></li>
-    <li><a href="portfolio.html" class="active">Portfolio</a></li>
-    <li><a href="about.html">À propos</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <div class="mobile-menu-cta">
-    <a href="contact.html">Démarrer un projet</a>
-  </div>
-</div>
 
 <!-- HERO -->
 <div class="portfolio-hero">
@@ -797,22 +785,6 @@
 <script>
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
-
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  mobileMenu.classList.toggle('active');
-});
-
-// Close menu when clicking a link
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('active');
-  });
-});
-
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);} }), {threshold:0.1});
 reveals.forEach(el => observer.observe(el));
