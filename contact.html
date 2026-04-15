@@ -55,9 +55,7 @@
   letter-spacing: 0.14em; text-transform: uppercase;
   color: rgba(255,255,255,0.3); margin-bottom: 4px;
 }
-.contact-info-value {
-  font-size: 14px; color: rgba(255,255,255,0.8);
-}
+.contact-info-value { font-size: 14px; color: rgba(255,255,255,0.8); }
 .contact-socials {
   display: flex; gap: 10px; margin-top: 40px;
   position: relative; z-index: 1;
@@ -70,7 +68,6 @@
 }
 .contact-social:hover { border-color: var(--purple); color: var(--white); background: var(--purple); }
 
-/* FORM */
 .contact-right {
   padding: 80px 52px;
   display: flex; flex-direction: column; justify-content: center;
@@ -102,9 +99,7 @@
 }
 .form-textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
 .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7972' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer; }
-.form-budget {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-}
+.form-budget { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .budget-option { display: none; }
 .budget-label {
   display: block; padding: 10px 14px; text-align: center;
@@ -127,9 +122,8 @@
   display: flex; align-items: center; justify-content: center; gap: 10px;
 }
 .form-submit:hover { background: var(--dpurple); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(83,74,183,0.3); }
-.form-note {
-  font-size: 11px; color: var(--muted); text-align: center; line-height: 1.6;
-}
+.form-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.form-note { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.6; }
 
 @media (max-width: 900px) {
   .contact-layout { grid-template-columns: 1fr; }
@@ -155,6 +149,7 @@
 </nav>
 
 <div class="contact-layout">
+
   <!-- LEFT -->
   <div class="contact-left">
     <div class="contact-left-bg"></div>
@@ -216,7 +211,8 @@
   <!-- RIGHT — FORM -->
   <div class="contact-right">
     <div class="section-label reveal" style="margin-bottom:24px;">Formulaire de contact</div>
-    <form class="contact-form reveal reveal-delay-1" id="contactForm">
+
+    <form class="contact-form reveal reveal-delay-1" id="contactForm" onsubmit="handleSubmit(event)">
       <div class="form-row">
         <div class="form-group">
           <label class="form-label" for="nom">Nom complet *</label>
@@ -260,7 +256,7 @@
         <label class="form-label" for="message">Décrivez votre projet *</label>
         <textarea class="form-textarea" id="message" name="message" placeholder="Parlez-nous de votre projet, vos objectifs, votre délai idéal..." required></textarea>
       </div>
-      <button type="submit" class="form-submit">
+      <button type="submit" class="form-submit" id="submitBtn">
         Envoyer le message
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
@@ -280,49 +276,44 @@
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
 const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);} }), {threshold:0.1});
+const observer = new IntersectionObserver(entries => entries.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+}), {threshold:0.1});
 reveals.forEach(el => observer.observe(el));
+</script>
 
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+emailjs.init('bkHj_h9xU0gCDFB7Q');
+
+function handleSubmit(e) {
   e.preventDefault();
-  
-  const nom = document.getElementById('nom').value;
-  const email = document.getElementById('email').value;
-  const entreprise = document.getElementById('entreprise').value;
-  const service = document.getElementById('service').value;
-  const budget = document.querySelector('input[name="budget"]:checked')?.value || '';
-  const message = document.getElementById('message').value;
 
-  const data = {
-    nom,
-    email,
-    entreprise,
-    service,
-    budget,
-    message
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Envoi en cours...';
+  btn.disabled = true;
+
+  const params = {
+    from_name:    document.getElementById('nom').value,
+    from_email:   document.getElementById('email').value,
+    company:      document.getElementById('entreprise').value || '—',
+    service_type: document.getElementById('service').value || '—',
+    budget:       document.querySelector('input[name="budget"]:checked')?.value || '—',
+    message:      document.getElementById('message').value,
   };
 
-  fetch('/sendmail', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      document.querySelector('.contact-form').style.display = 'none';
+  emailjs.send('service_yultixh', 'template_bgvgklo', params)
+    .then(() => {
+      document.getElementById('contactForm').style.display = 'none';
       document.getElementById('success-msg').style.display = 'block';
-    } else {
-      alert('Erreur: ' + data.message);
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Erreur lors de l\'envoi');
-  });
-});
+    })
+    .catch(err => {
+      btn.textContent = 'Envoyer le message';
+      btn.disabled = false;
+      alert('Erreur: ' + JSON.stringify(err));
+    });
+}
 </script>
+
 </body>
 </html>
