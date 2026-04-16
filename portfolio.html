@@ -282,8 +282,11 @@
 
       <!-- FlexCore App -->
       <div class="project-card col-7">
-        <div class="project-visual" style="background:linear-gradient(135deg,#EEEDFE 0%,#C8C4F0 100%);">
-          <div class="app-mock">
+        <div class="project-visual" style="background:linear-gradient(135deg,#EEEDFE 0%,#C8C4F0 100%);position:relative;overflow:hidden;">
+          <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;z-index:0;">
+            <source src="1WQySBJuUrYNCxro1MEwK_muted_video_1773247670_0.mp4" type="video/mp4">
+          </video>
+          <div class="app-mock" style="position:relative;z-index:1;">
             <div class="phone-frame">
               <div class="phone-notch"></div>
               <div class="phone-screen">
@@ -307,7 +310,7 @@
               </div>
             </div>
           </div>
-          <div class="project-arrow">→</div>
+          <div class="project-arrow" style="z-index:2;">→</div>
         </div>
         <div class="project-info">
           <div class="project-cat">Application Mobile · Fitness & Sport</div>
